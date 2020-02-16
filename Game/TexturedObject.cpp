@@ -33,7 +33,7 @@ TileSet& TexturedObject::getTileSet()
 void TexturedObject::beforeDraw(time_t m_time, sf::RenderWindow& m_window)
 {
 	this->shape.setSize(sf::Vector2f{ animation.getWidth() + 0.0f, animation.getHeight() + 0.0f });
-	this->shape.setTexture(this->animation.getFrame(m_time).get());
+	this->shape.setTexture(this->getAnimation().getFrame(m_time).get());
 }
 
 void TexturedObject::draw(time_t m_time, sf::RenderWindow& m_window)
@@ -41,4 +41,9 @@ void TexturedObject::draw(time_t m_time, sf::RenderWindow& m_window)
 	this->beforeDraw(m_time, m_window);
 	this->shape.setPosition(this->position);
 	m_window.draw(this->shape);
+}
+
+Animation& TexturedObject::getAnimation()
+{
+	return this->animation;
 }

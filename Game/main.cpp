@@ -1,4 +1,3 @@
-#define SFML_STATIC
 #include "Game.h"
 #include <iostream>
 

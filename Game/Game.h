@@ -27,6 +27,7 @@ public:
 private:
 	std::vector<std::shared_ptr<GameObject>> objects;
 	std::vector<std::shared_ptr<EntityObject>> entities;
+	std::shared_ptr<PlayerEntity> player;
 	sf::VideoMode videoMode;
 	sf::View view;
 	sf::Color clearColor = sf::Color::Black;

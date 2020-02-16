@@ -59,7 +59,8 @@ void Game::init()
 	tileSetManager.addTileSet(std::string{ "box" }, tileSetBox);
 	tileSetManager.addTileSet(std::string{ "player" }, tileSetPlayer);
 
-	this->entities.push_back(std::make_shared<PlayerEntity>(PlayerEntity{ sf::Vector2f{20.0f, 20.0f}, this->tileSetManager }));
+	this->player = std::make_shared<PlayerEntity>(PlayerEntity{ sf::Vector2f{20.0f, 20.0f}, this->tileSetManager });
+	this->entities.push_back(this->player);
 
 	/**/
 
@@ -78,13 +79,16 @@ void Game::run()
 			switch (this->event.type) {
 			case sf::Event::MouseWheelScrolled:
 				std::cout << event.mouseWheelScroll.delta << std::endl;
-				this->view.zoom(1 - event.mouseWheelScroll.delta / 0.85); //TODO: add zoom
+				//this->view.zoom(1 - event.mouseWheelScroll.delta / 0.85); //TODO: add zoom
 				this->window.setView(this->view);
 				break;
 			case sf::Event::Closed:
 				this->window.close();
 				break;
 			case sf::Event::KeyPressed:
+				this->handleKeyEvent(event);
+				break;
+			case sf::Event::KeyReleased:
 				this->handleKeyEvent(event);
 				break;
 			}
@@ -98,9 +102,24 @@ void Game::run()
 
 void Game::update()
 {
+	if (this->player->walkingTop) {
+		this->player->setVelocityY(-PlayerEntity::BASE_SPEED);
+	}
+
+	if (this->player->walkingDown) {
+		this->player->setVelocityY(PlayerEntity::BASE_SPEED);
+	}
+
+	if (this->player->walkingLeft) {
+		this->player->setVelocityX(-PlayerEntity::BASE_SPEED);
+	}
+
+	if (this->player->walkingRight) {
+		this->player->setVelocityX(PlayerEntity::BASE_SPEED);
+	}
+
 	this->view.move(this->entities[0]->getVelocity().x, this->entities[0]->getVelocity().y);
 	this->window.setView(this->view);
-	std::cout << this->entities[0]->getVelocity().x << std::endl;
 	auto elapsedMs = this->getElapsedMs();
 	for each (auto object in this->objects)
 	{
@@ -153,18 +172,42 @@ TileSetManager & Game::getTileSetManager()
 
 void Game::handleKeyEvent(sf::Event event)
 {
-	auto player = this->entities[0];
-
-	switch (event.key.code)
-	{
-	case sf::Keyboard::W:
-		std::cout << "W" << std::endl;
-		player->setVelocityY(-10.0);
-		break;
-	case sf::Keyboard::S:
-		player->setVelocityY(10.0);
-		break;
-	default:
-		break;
+	if (event.type == sf::Event::KeyPressed) {
+		switch (event.key.code)
+		{
+		case sf::Keyboard::W:
+			this->player->walkingTop = true;
+			break;
+		case sf::Keyboard::S:
+			this->player->walkingDown = true;
+			break;
+		case sf::Keyboard::A:
+			this->player->walkingLeft = true;
+			break;
+		case sf::Keyboard::D:
+			this->player->walkingRight = true;
+			break;
+		default:
+			break;
+		}
+	}
+	else if (event.type == sf::Event::KeyReleased) {
+		switch (event.key.code)
+		{
+		case sf::Keyboard::W:
+			this->player->walkingTop = false;
+			break;
+		case sf::Keyboard::S:
+			this->player->walkingDown = false;
+			break;
+		case sf::Keyboard::A:
+			this->player->walkingLeft = false;
+			break;
+		case sf::Keyboard::D:
+			this->player->walkingRight = false;
+			break;
+		default:
+			break;
+		}
 	}
 }

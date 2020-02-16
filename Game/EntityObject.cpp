@@ -1,4 +1,6 @@
 #include "EntityObject.h"
+#include <math.h>
+#include <iostream>
 
 const float BASE_FRICTION = 0.25;
 
@@ -12,8 +14,15 @@ void EntityObject::update()
 	this->position.x += this->velocity.x;
 	this->position.y += this->velocity.y;
 
-	this->velocity.x = this->velocity.x > 0 ? this->velocity.x - BASE_FRICTION : this->velocity.x + BASE_FRICTION;
-	this->velocity.y = this->velocity.y > 0 ? this->velocity.y - BASE_FRICTION : this->velocity.y + BASE_FRICTION;
+	if(this->velocity.y > 0)
+		this->velocity.y = std::max(this->velocity.y - BASE_FRICTION, 0.0f);
+	else if(this->velocity.y < 0)
+		this->velocity.y = std::min(this->velocity.y + BASE_FRICTION, 0.0f);
+
+	if (this->velocity.x > 0)
+		this->velocity.x = std::max(this->velocity.x - BASE_FRICTION, 0.0f);
+	else if (this->velocity.x < 0)
+		this->velocity.x = std::min(this->velocity.x + BASE_FRICTION, 0.0f);
 }
 
 void EntityObject::setVelocityX(float m_value)

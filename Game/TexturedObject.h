@@ -10,6 +10,7 @@ public:
 	TileSet& getTileSet();
 	void beforeDraw(time_t m_time, sf::RenderWindow& m_window);
 	virtual void draw(time_t m_time, sf::RenderWindow& m_window);
+	virtual Animation& getAnimation();
 protected:
 	sf::Vector2f position;
 	Animation animation;
