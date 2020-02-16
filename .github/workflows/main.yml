@@ -1,0 +1,17 @@
+name: Test
+
+on: [deployment]
+
+jobs:
+  build:
+
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Test Step
+        run: echo "Deployed"
+  build2:
+    runs-on: [ubuntu-latest]
+    steps:
+      - name: Test Step 2
+        run: echo "Hello"
