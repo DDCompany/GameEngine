@@ -1,6 +1,6 @@
 name: 'Hello World'
 on: 
-  deployment:
+  release:
     types: [published]
 
 jobs:
