@@ -3,6 +3,9 @@ on:
   release:
     types: [published]
 
+env:
+  TEST_VAR: 5     
+
 jobs:
   publish:
     runs-on: ubuntu-latest
@@ -11,6 +14,4 @@ jobs:
       - uses: actions/setup-node@v1
         with:
           node-version: 12
-      - run: npm run publish_mod ${{TEST_VAR}} 23 test
-        env:
-          TEST_VAR: 5          
+      - run: npm run publish_mod ${{TEST_VAR}} 23 test     
