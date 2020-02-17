@@ -1,1 +1,1 @@
-console.log(TEST_VAR);
+console.log(process.argv);
