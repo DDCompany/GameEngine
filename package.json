@@ -1,0 +1,9 @@
+{
+  "name": "test",
+  "version": "1.0.0",
+  "description": "",
+  "scripts": {
+    "publish_mod": "node publish_mod.js"
+  },
+  "author": ""
+}
