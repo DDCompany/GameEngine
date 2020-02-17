@@ -1,6 +1,8 @@
 name: 'Hello World'
 on: 
-  release:
+  deployment:
+  push:
+    types: [published]
 
 jobs:
   publish:
@@ -10,4 +12,4 @@ jobs:
       - uses: actions/setup-node@v1
         with:
           node-version: 12
-      - run: npm run publish_mod
+      - run: npm run publish_mode
