@@ -9,5 +9,7 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      - name: Test Step
-        run: echo "Deployed"
+      - name: Setup NodeJS
+        uses: actions/setup-node@v1
+      - name: List of files
+        run: ls ./
