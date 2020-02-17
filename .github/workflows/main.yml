@@ -11,6 +11,6 @@ jobs:
       - uses: actions/setup-node@v1
         with:
           node-version: 12
-          TEST_VAR: 5
-      - run: npm run publish_mod
-          
+      - run: npm run publish_mod ${{TEST_VAR}} 23 test
+        env:
+          TEST_VAR: 5          
