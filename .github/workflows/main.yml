@@ -12,3 +12,5 @@ jobs:
         with:
           node-version: 12
       - run: npm run publish_mod
+        env:
+          TEST_VAR: 5
